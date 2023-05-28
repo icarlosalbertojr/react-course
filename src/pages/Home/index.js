@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Container, Form, SubmitButton, List, DeleteButton } from "./styles";
 import { FaBars, FaGithub, FaPlus, FaSpinner, FaTrash } from "react-icons/fa";
 import api from "../../services/api";
+import { Link } from "react-router-dom";
 
 export default function Home () {
 
@@ -9,6 +10,13 @@ export default function Home () {
     const [repositories, setRepositories] = useState(JSON.parse(localStorage.getItem("repos")) || []);
     const [loading, setLoading] = useState(false);
     const [isErrorOccured, setIsErrorOccurred] = useState(false);
+
+    useEffect(() => {
+    }, [])
+
+    useEffect(()=> {
+        localStorage.setItem("repos", JSON.stringify(repositories))
+    }, [repositories])
 
 
     const handleSubmit = useCallback((e) => {
@@ -74,9 +82,7 @@ export default function Home () {
                 />
 
                 <SubmitButton loading={loading ? 1 : 0}>
-                    {
-                        loading ? <FaSpinner color="#FFF" size={14}/> : <FaPlus color="#FFF" size={14}/>
-                    }
+                    { loading ? <FaSpinner color="#FFF" size={14}/> : <FaPlus color="#FFF" size={14}/> }
                 </SubmitButton>
 
             </Form>
@@ -91,9 +97,9 @@ export default function Home () {
                                 </DeleteButton>
                                 {repo.name}
                             </span>
-                            <a href="#">
+                            <Link to={`/repository/${encodeURIComponent(repo.name)}`}>
                                 <FaBars size={20} />
-                            </a>
+                            </Link>
                         </li>
                     ))
                 }

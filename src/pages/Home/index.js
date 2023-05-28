@@ -11,9 +11,6 @@ export default function Home () {
     const [loading, setLoading] = useState(false);
     const [isErrorOccured, setIsErrorOccurred] = useState(false);
 
-    useEffect(() => {
-    }, [])
-
     useEffect(()=> {
         localStorage.setItem("repos", JSON.stringify(repositories))
     }, [repositories])
